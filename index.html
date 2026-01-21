@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    height:100vh;
+    background:#ffb3e6;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: Arial, sans-serif;
+    overflow:hidden;
+}
+
+.container{
+    width:100%;
+    max-width:360px;
+    text-align:center;
+    padding:20px;
+    z-index:2;
+}
+
+h1{
+    color:#c0392b;
+    font-size:22px;
+    margin-bottom:25px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+#yes{
+    background:#5cb85c;
+    color:white;
+    font-size:28px;
+    padding:18px 36px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+    transform:scale(1);
+}
+
+#no{
+    background:#e74c3c;
+    color:white;
+    font-size:14px;
+    padding:10px 16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.gif img{
+    width:140px;
+}
+
+/* ❤️ Falling hearts */
+.heart{
+    position:fixed;
+    top:-20px;
+    font-size:20px;
+    animation: fall linear forwards;
+    z-index:1;
+}
+
+@keyframes fall{
+    to{
+        transform: translateY(110vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+    <h1>Will you be my Valentine? 💕</h1>
+
+    <div class="buttons">
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+    </div>
+
+    <div class="gif">
+        <img src="https://i.ibb.co/F4gkr64P/mochi-mochi-peach-cat.gif">
+    </div>
+</div>
+
+<script>
+let scale = 1;
+let clickCount = 0;
+
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const main = document.getElementById("main");
+
+const noTexts = [
+    "No 😢",
+    "Please beautiful 🥺",
+    "Angel 🥹",
+    "Please yaar 💖",
+    "Man jao na 😭",
+    "Last chance 😘"
+];
+
+no.addEventListener("click", ()=>{
+    scale += 0.2;
+    yes.style.transform = `scale(${scale})`;
+
+    clickCount++;
+    if(clickCount < noTexts.length){
+        no.innerText = noTexts[clickCount];
+    } else {
+        no.innerText = "🥺❤️";
+    }
+});
+
+yes.addEventListener("click", ()=>{
+    main.innerHTML = `
+        <h1>Yay! ❤️😍</h1>
+        <img src="https://i.ibb.co/F4gkr64P/mochi-mochi-peach-cat.gif" style="width:180px">
+        <p style="font-size:18px">You made my day 💕</p>
+    `;
+    startHearts();
+});
+
+/* ❤️ Heart Rain Function */
+function startHearts(){
+    setInterval(()=>{
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (15 + Math.random()*20) + "px";
+        heart.style.animationDuration = (2 + Math.random()*3) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>heart.remove(), 5000);
+    }, 200);
+}
+</script>
+
+</body>
+</html>
